@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Find Your Perfect College</title>
+    <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background-color: #f8f9fa; color: #333; }
+   /* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 10%;
+  background: rgba(255, 255, 255, 0.822);
+  backdrop-filter: blur(12px);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Logo */
+.navbar .logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #007fe8;
+  letter-spacing: 1px;
+  transition: transform 0.3s;
+}
+.navbar .logo:hover {
+  transform: scale(1.08);
+}
+
+/* Navbar Menu */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+/* Links */
+.navbar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 15px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+/* Underline animation */
+.navbar ul li a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -6px;
+  background: #007bff;
+  transition: width 0.3s;
+}
+.navbar ul li a:hover {
+  color: #007bff;
+}
+.navbar ul li a:hover::after {
+  width: 100%;
+}
+
+/* Buttons (Profile + Logout) */
+.navbar ul li button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+/* Profile button */
+.navbar ul li .profile-btn {
+  background: #007bff;
+  color: #fff;
+}
+.navbar ul li .profile-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Logout button */
+.navbar ul li .logout-btn {
+  background: #ff4d4d;
+  color: #fff;
+}
+.navbar ul li .logout-btn:hover {
+  background: #cc0000;
+  transform: translateY(-2px);
+}
+
+        header {
+            padding: 30px 40px 20px 40px;
+            background: #fff;
+        }
+
+        h1 {
+            font-size: 2.6em;
+            margin-bottom: 10px;
+        }
+
+        .search-filter {
+            padding: 20px 40px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-filter input {
+            width: 40%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 1em;
+        }
+
+        .filters button {
+            background: #e4e7ee;
+            border: none;
+            border-radius: 20px;
+            margin-right: 8px;
+            padding: 8px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filters button:hover, 
+        .filters .active {
+            background: #0849d1;
+            color: #fff;
+        }
+
+        .college-list {
+            padding: 20px 40px;
+        }
+
+        .college-card {
+            display: flex;
+            background: #fff;
+            border-radius: 17px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px #ddd;
+            overflow: hidden;
+        }
+
+        .college-card img {
+            width: 220px;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .college-info {
+            padding: 25px 35px;
+            flex: 1;
+        }
+
+        .college-info h2 {
+            margin: 0 0 12px 0;
+            font-size: 1.6em;
+        }
+
+        .tags {
+            margin-bottom: 17px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #fce8d2;
+            color: #666;
+            border-radius: 15px;
+            padding: 5px 16px;
+            margin-right: 8px;
+            font-size: 0.96em;
+            font-weight: 600;
+        }
+
+        .stats {
+            margin: 15px 0;
+            color: #555;
+        }
+
+        .stats span {
+            margin-right: 30px;
+            font-size: 1em;
+        }
+
+        .fees {
+            color: #0849d1;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .actions button {
+            background: #0849d1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 9px 25px;
+            font-size: 1em;
+            margin-right: 10px;
+            cursor: pointer;
+            margin-bottom: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .actions button:hover {
+            background-color: #063a9a;
+        }
+
+        .colleges-near {
+            padding: 35px 40px;
+            background: #fff;
+            border-radius: 15px;
+            margin: 25px 40px;
+            box-shadow: 0 2px 8px #e4e7ee;
+        }
+
+        .map-placeholder {
+            background: #f2f3f7;
+            border-radius: 13px;
+            text-align: center;
+            padding: 45px 0;
+            color: #666;
+            font-size: 1.17em;
+            margin-top: 10px;
+        }
+
+        .map-icon {
+            font-size: 2.6em;
+            color: #b9bfd0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">MargDarshak</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="assessment.html">Assessment</a></li>
+      <li><a href="career.html">Career Guide</a></li>
+      <li><a href="college.html">College</a></li>
+      <li><a href="notification.html">Updates</a></li>
+      <li><a id="profileBtn" href="profile.html" >Profile</a></li>
+      <li><button id="logoutBtn" >Logout</button></li>
+    </ul>
+  </nav>
+
+    <header>
+        <h1>Find Your Perfect College</h1>
+        <p>Discover colleges and universities that match your academic goals and preferences.</p>
+    </header>
+
+    <section class="search-filter">
+        <input type="text" placeholder="Search colleges by name or location..." />
+        <div class="filters">
+            <button class="active">All Colleges</button>
+            <button>Engineering</button>
+            <button>Universities</button>
+            <button>Medical</button>
+            <button>Management</button>
+        </div>
+    </section>
+
+    <section class="college-list">
+        <div class="college-card">
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=200&fit=crop" alt="IIT Delhi" />
+            <div class="college-info">
+                <h2>Indian Institute of Technology, Delhi</h2>
+                <div class="tags">
+                    <span class="tag">Top Ranked</span>
+                    <span class="tag">IIT</span>
+                    <span class="tag">Engineering</span>
+                </div>
+                <p>Premier engineering institute with excellent research facilities and industry connections.</p>
+                <div class="stats">
+                    <span>8,000+ Students</span>
+                    <span>25 Courses</span>
+                    <span>95% Placement</span>
+                </div>
+                <div class="fees">₹2.5L - ₹4L Annual Fees</div>
+                <div class="actions">
+                    <button>Apply Now</button>
+                    <button>View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="college-card">
+            <img src="https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=400&h=200&fit=crop" alt="Jamia Millia Islamia" />
+            <div class="college-info">
+                <h2>Jamia Millia Islamia</h2>
+                <div class="tags">
+                    <span class="tag">Central University</span>
+                    <span class="tag">Research</span>
+                    <span class="tag">Diverse Programs</span>
+                </div>
+                <p>Renowned central university known for its inclusive environment and quality education.</p>
+                <div class="stats">
+                    <span>20,000+ Students</span>
+                    <span>80 Courses</span>
+                    <span>70% Placement</span>
+                </div>
+                <div class="fees">₹40K - ₹1.5L Annual Fees</div>
+                <div class="actions">
+                    <button>Apply Now</button>
+                    <button>View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="college-card">
+            <img src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=400&h=200&fit=crop" alt="Guru Tegh Bahadur Institute" />
+            <div class="college-info">
+                <h2>Guru Tegh Bahadur Institute of Technology</h2>
+                <div class="tags">
+                    <span class="tag">Engineering</span>
+                    <span class="tag">Technology</span>
+                    <span class="tag">IPU Affiliated</span>
+                </div>
+                <p>Leading engineering college affiliated to IP University with strong industry partnerships.</p>
+                <div class="stats">
+                    <span>3,000+ Students</span>
+                    <span>12 Courses</span>
+                    <span>82% Placement</span>
+                </div>
+                <div class="fees">₹1L - ₹2L Annual Fees</div>
+                <div class="actions">
+                    <button>Apply Now</button>
+                    <button>View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="college-card">
+            <img src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=400&h=200&fit=crop" alt="Delhi University" />
+            <div class="college-info">
+                <h2>Delhi University</h2>
+                <div class="tags">
+                    <span class="tag">Central University</span>
+                    <span class="tag">Liberal Arts</span>
+                    <span class="tag">Research</span>
+                </div>
+                <p>One of India's largest universities offering diverse undergraduate and postgraduate programs.</p>
+                <div class="stats">
+                    <span>50,000+ Students</span>
+                    <span>150 Courses</span>
+                    <span>78% Placement</span>
+                </div>
+                <div class="fees">₹50K - ₹2L Annual Fees</div>
+                <div class="actions">
+                    <button>Apply Now</button>
+                    <button>View Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="colleges-near">
+        <h2>Colleges Near You</h2>
+        <div class="map-placeholder">
+            <span class="map-icon">&#128205;</span>
+            <p>Interactive map coming soon<br />View colleges on map and get directions</p>
+        </div>
+    </section>
+</body>
+</html>

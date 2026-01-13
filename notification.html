@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notifications</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background-color: #f8f9fa; color: #333; }
+   /* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 10%;
+  background: rgba(255, 255, 255, 0.822);
+  backdrop-filter: blur(12px);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Logo */
+.navbar .logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #007fe8;
+  letter-spacing: 1px;
+  transition: transform 0.3s;
+}
+.navbar .logo:hover {
+  transform: scale(1.08);
+}
+
+/* Navbar Menu */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+/* Links */
+.navbar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 15px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+/* Underline animation */
+.navbar ul li a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -6px;
+  background: #007bff;
+  transition: width 0.3s;
+}
+.navbar ul li a:hover {
+  color: #007bff;
+}
+.navbar ul li a:hover::after {
+  width: 100%;
+}
+
+/* Buttons (Profile + Logout) */
+.navbar ul li button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+/* Profile button */
+.navbar ul li .profile-btn {
+  background: #007bff;
+  color: #fff;
+}
+.navbar ul li .profile-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Logout button */
+.navbar ul li .logout-btn {
+  background: #ff4d4d;
+  color: #fff;
+}
+.navbar ul li .logout-btn:hover {
+  background: #cc0000;
+  transform: translateY(-2px);
+}
+
+    .notification-header {
+      max-width: 900px;
+      margin: 36px auto 16px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .notif-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #181c2e;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .notif-title .icon {
+      font-size: 2.1rem;
+      color: #805cf4;
+    }
+    .notif-title .badge {
+      background: #ff3b3b;
+      color: #fff;
+      font-size: 1.02rem;
+      padding: 2px 13px;
+      border-radius: 15px;
+      margin-left: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+    }
+    .notification-header p {
+      color: #7d8498;
+      font-size: 19px;
+      margin-top: 5px;
+      margin-bottom: 0;
+      text-align: center;
+    }
+    .tabs-bar {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 35px auto 20px auto;
+      gap: 20px;
+    }
+    .tabs-list {
+      display: flex;
+      gap: 10px;
+    }
+    .tabs-list button {
+      background: #fff;
+      color: #292d41;
+      border: none;
+      outline: none;
+      padding: 13px 30px;
+      border-radius: 16px;
+      font-size: 1.14rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,20,90,.03);
+      position: relative;
+      transition: background .25s, color .25s;
+    }
+    .tabs-list button.active,
+    .tabs-list button:hover {
+      background: #f2f1fe;
+      color: #805cf4;
+      box-shadow: 0 2px 10px rgba(128, 92, 244, 0.3);
+    }
+    .tabs-list button span.count {
+      background: #edeff8;
+      color: #805cf4;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 500;
+      margin-left: 5px;
+    }
+    .mark-all-btn {
+      background: #fff;
+      color: #564de6;
+      border: 1.5px solid #e4e6f8;
+      padding: 11px 23px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-left: auto;
+      margin-right: 10px;
+      transition: background .25s, color .25s, border .25s;
+      box-shadow: 0 1px 3px rgba(16,82,207,0.15);
+    }
+    .mark-all-btn:hover {
+      background: #564de6;
+      color: #fff;
+      border: 1.5px solid #564de6;
+      box-shadow: 0 4px 15px rgba(86,77,230,0.8);
+    }
+    .notification-list {
+      max-width: 900px;
+      margin: 0 auto 80px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 27px;
+    }
+    .notif-card {
+      background: #f7f4ff;
+      border: 2px solid #e8e3fd;
+      border-radius: 22px;
+      padding: 29px 32px 20px 32px;
+      box-shadow: 0 4px 24px rgba(128,92,244,0.10);
+      margin-bottom: 0;
+      transition: border .25s, box-shadow .25s;
+      position: relative;
+    }
+    .notif-card.medium { border: 2px solid #f9eec3; background: #fffdfa; }
+    .notif-card.low { border: 2px solid #bee3cf; background: #fafffd; }
+    .notif-card.expired { opacity: 0.85; }
+    .notif-main-row {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 7px;
+    }
+    .notif-type {
+      font-size: 1.5rem;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    .notif-type.jeemain { color: #ff3b3b; }
+    .notif-type.neet { color: #ffa200; }
+    .notif-type.bell { color: #8065f4; }
+    .notif-title-row {
+      font-size: 1.23rem;
+      font-weight: bold;
+      color: #232542;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .notif-title-row .unread-dot {
+      width: 8px;
+      height: 8px;
+      background: #805cf4;
+      border-radius: 50%;
+      display: inline-block;
+      margin-left: 6px;
+    }
+    .notif-desc {
+      color: #888bb5;
+      margin-top: 5px;
+      margin-bottom: 8px;
+      font-size: 1.03rem;
+    }
+    .notif-chips {
+      margin-bottom: 13px;
+    }
+    .notif-chip {
+      display: inline-block;
+      background: #185ed4;
+      color: #fff;
+      border-radius: 15px;
+      padding: 5px 18px;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-right: 7px;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+      transition: background-color 0.25s;
+      cursor: default;
+    }
+    .notif-chip:hover {
+      background-color: #0a3d75;
+    }
+    .notif-chip.neet { background: #0ba4b8; }
+    .notif-chip.medical { background: #ffd400; color: #595008; }
+    .notif-chip.exam { background: #fff; color: #1a56b4; border: 1.5px solid #1150ce; }
+    .notif-chip.profile { background: #af69f0; }
+    .notif-chip.scholarship { background: #ee7e3c; }
+    .notif-chip.finaid { background: #43ce9d; }
+    .notif-chip.competition { background: #64d6ff; color: #133254; }
+
+    .notif-tag {
+      display: inline-block;
+      background: #ffdcdc;
+      color: #ff3b3b;
+      border-radius: 13px;
+      padding: 4px 16px;
+      font-size: .96rem;
+      font-weight: 600;
+      margin-left: 14px;
+      margin-bottom: 1px;
+    }
+    .notif-tag.medium { background: #ffeea1; color: #b49c10; }
+    .notif-tag.low { background: #d6ffe7; color: #088f5d; }
+    .notif-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 9px 0 0 0;
+    }
+    .notif-time {
+      color: #9699bc;
+      font-size: 0.98rem;
+      margin-right: 14px;
+    }
+    .notif-actions {
+      display: flex;
+      gap: 13px;
+      align-items: center;
+    }
+    .notif-actions .status {
+      color: #b8bacb;
+      background: #f2f2f2;
+      border-radius: 9px;
+      font-size: 1rem;
+      padding: 4px 14px;
+      margin-right: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .notif-actions .open-btn {
+      background: #fff;
+      color: #564de6;
+      border: 1.3px solid #d3d8ff;
+      font-size: 1.02rem;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 9px 22px;
+      cursor: pointer;
+      transition: background .25s, color .25s, border .25s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .notif-actions .open-btn:hover {
+      background: #564de6;
+      color: #fff;
+      border: 1.3px solid #564de6;
+      box-shadow: 0 4px 20px rgba(86, 77, 230, 0.58);
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .notification-header,
+      .tabs-bar,
+      .notification-list {
+        max-width: 99vw;
+        padding: 0 0px;
+      }
+      .notif-card { padding: 18px 9px 10px 11px; }
+      .notif-title { font-size:1.3rem;}
+    }
+  </style>
+</head>
+<body>
+    <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">MargDarshak</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="assessment.html">Assessment</a></li>
+      <li><a href="career.html">Career Guide</a></li>
+      <li><a href="college.html">College</a></li>
+      <li><a href="notification.html">Updates</a></li>
+      <li><a id="profileBtn" href="profile.html" >Profile</a></li>
+      <li><button id="logoutBtn" >Logout</button></li>
+    </ul>
+  </nav>
+
+  <div class="notification-header">
+    <div class="notif-title">
+      <span class="icon">🔔</span> 
+      Notifications <span class="badge">4 new</span>
+    </div>
+    <p>Stay updated with important deadlines, opportunities, and announcements</p>
+  </div>
+  <div class="tabs-bar">
+    <div class="tabs-list" role="tablist">
+      <button class="active" role="tab" aria-selected="true" data-filter="all">All <span class="count">(6)</span></button>
+      <button role="tab" aria-selected="false" data-filter="deadline">Deadlines <span class="count">(1)</span></button>
+      <button role="tab" aria-selected="false" data-filter="opportunity">Opportunities <span class="count">(3)</span></button>
+      <button role="tab" aria-selected="false" data-filter="news">News <span class="count">(1)</span></button>
+      <button role="tab" aria-selected="false" data-filter="reminder">Reminders <span class="count">(1)</span></button>
+    </div>
+    <button class="mark-all-btn">Mark All Read</button>
+  </div>
+  <div class="notification-list">
+    <div class="notif-card" data-type="deadline" data-read="false">
+      <div class="notif-main-row">
+        <span class="notif-type jeemain">&#9888;</span>
+        <span class="notif-title-row">JEE Main 2024 Registration Closing Soon <span class="unread-dot"></span></span>
+        <span class="notif-tag">high</span>
+      </div>
+      <div class="notif-desc">
+        Last 5 days to register for JEE Main 2024. Don't miss this important engineering entrance exam.
+      </div>
+      <div class="notif-chips">
+        <span class="notif-chip">JEE</span>
+        <span class="notif-chip">Engineering</span>
+        <span class="notif-chip exam">Entrance Exam</span>
+      </div>
+      <div class="notif-meta-row">
+        <span class="notif-time"><span class="status">&#128197; Expired</span> 612 days ago</span>
+        <div class="notif-actions">
+          <button class="open-btn">&#128279; Open</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="notif-card" data-type="deadline" data-read="false">
+      <div class="notif-main-row">
+        <span class="notif-type neet">&#11088;</span>
+        <span class="notif-title-row">NEET 2024 Application Started <span class="unread-dot"></span></span>
+        <span class="notif-tag">high</span>
+      </div>
+      <div class="notif-desc">
+        Applications are now open for NEET 2024. Medical aspirants can apply until March 2024.
+      </div>
+      <div class="notif-chips">
+        <span class="notif-chip neet">NEET</span>
+        <span class="notif-chip medical">Medical</span>
+        <span class="notif-chip exam">Entrance Exam</span>
+      </div>
+      <div class="notif-meta-row">
+        <span class="notif-time"><span class="status">&#128197; Expired</span> 617 days ago</span>
+        <div class="notif-actions">
+          <button class="open-btn">&#128279; Open</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="notif-card" data-type="news" data-read="false">
+      <div class="notif-main-row">
+        <span class="notif-type bell">&#128276;</span>
+        <span class="notif-title-row">Delhi University Admission Process Update</span>
+        <span class="notif-tag medium">medium</span>
+      </div>
+      <div class="notif-desc">
+        DU has announced the revised admission schedule. Check the new dates and requirements.
+      </div>
+      <div class="notif-chips">
+        <span class="notif-chip">DU</span>
+        <span class="notif-chip">Admission</span>
+        <span class="notif-chip">Delhi University</span>
+      </div>
+      <div class="notif-meta-row">
+        <span class="notif-time">615 days ago</span>
+        <div class="notif-actions">
+          <button class="open-btn">&#128279; Open</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="notif-card" data-type="reminder" data-read="false">
+      <div class="notif-main-row">
+        <span class="notif-type">&#9200;</span>
+        <span class="notif-title-row">Complete Your Career Assessment <span class="unread-dot"></span></span>
+        <span class="notif-tag medium">medium</span>
+      </div>
+      <div class="notif-desc">
+        You haven't completed your personality assessment yet. Complete it to get personalized recommendations.
+      </div>
+      <div class="notif-chips">
+        <span class="notif-chip profile">Assessment</span>
+        <span class="notif-chip">Profile</span>
+      </div>
+      <div class="notif-meta-row">
+        <span class="notif-time">613 days ago</span>
+        <div class="notif-actions">
+          <button class="open-btn">&#128279; Open</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="notif-card" data-type="opportunity" data-read="false">
+      <div class="notif-main-row">
+        <span class="notif-type">&#11088;</span>
+        <span class="notif-title-row">Scholarship Alert: Merit-based Scholarships Available <span class="unread-dot"></span></span>
+        <span class="notif-tag medium">medium</span>
+      </div>
+      <div class="notif-desc">
+        Various merit-based scholarships are available for Class 12 students. Application deadline approaching.
+      </div>
+      <div class="notif-chips">
+        <span class="notif-chip scholarship">Scholarship</span>
+        <span class="notif-chip">Merit</span>
+        <span class="notif-chip finaid">Financial Aid</span>
+      </div>
+      <div class="notif-meta-row">
+        <span class="notif-time"><span class="status">&#128197; Expired</span> 616 days ago</span>
+        <div class="notif-actions">
+          <button class="open-btn">&#128279; Open</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="notif-card" data-type="opportunity" data-read="true">
+      <div class="notif-main-row">
+        <span class="notif-type">&#11088;</span>
+        <span class="notif-title-row">IIT Bombay Techfest 2024</span>
+        <span class="notif-tag low">low</span>
+      </div>
+      <div class="notif-desc">
+        Asia's largest science and technology festival is back! Register for competitions and workshops.
+      </div>
+      <div class="notif-chips">
+        <span class="notif-chip">IIT</span>
+        <span class="notif-chip">Technology</span>
+        <span class="notif-chip competition">Festival</span>
+        <span class="notif-chip competition">Competition</span>
+      </div>
+      <div class="notif-meta-row">
+        <span class="notif-time"><span class="status">&#128197; Expired</span> 619 days ago</span>
+        <div class="notif-actions">
+          <button class="open-btn">&#128279; Open</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const buttons = document.querySelectorAll('.tabs-list button');
+    const notifCards = document.querySelectorAll('.notif-card');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        });
+        button.classList.add('active');
+        button.setAttribute('aria-selected', 'true');
+
+        const filter = button.getAttribute('data-filter');
+        notifCards.forEach(card => {
+          if(filter === 'all') {
+            card.style.display = '';
+          } else {
+            card.style.display = card.getAttribute('data-type') === filter ? '' : 'none';
+          }
+        });
+      });
+    });
+
+    // Mark All Read button functionality (optional visual effect)
+    document.querySelector('.mark-all-btn').addEventListener('click', () => {
+      notifCards.forEach(card => {
+        card.setAttribute('data-read', 'true');
+        // Optionally remove unread dot visually
+        const dot = card.querySelector('.unread-dot');
+        if(dot) dot.style.display = 'none';
+      });
+      alert('All notifications marked as read.');
+    });
+  </script>
+</body>
+</html>

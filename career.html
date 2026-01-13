@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Career Guide - Margdarshak</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background-color: #f8f9fa; color: #333; }
+   /* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 10%;
+  background: rgba(255, 255, 255, 0.822);
+  backdrop-filter: blur(12px);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Logo */
+.navbar .logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #007fe8;
+  letter-spacing: 1px;
+  transition: transform 0.3s;
+}
+.navbar .logo:hover {
+  transform: scale(1.08);
+}
+
+/* Navbar Menu */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+/* Links */
+.navbar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 15px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+/* Underline animation */
+.navbar ul li a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -6px;
+  background: #007bff;
+  transition: width 0.3s;
+}
+.navbar ul li a:hover {
+  color: #007bff;
+}
+.navbar ul li a:hover::after {
+  width: 100%;
+}
+
+/* Buttons (Profile + Logout) */
+.navbar ul li button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+/* Profile button */
+.navbar ul li .profile-btn {
+  background: #007bff;
+  color: #fff;
+}
+.navbar ul li .profile-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Logout button */
+.navbar ul li .logout-btn {
+  background: #ff4d4d;
+  color: #fff;
+}
+.navbar ul li .logout-btn:hover {
+  background: #cc0000;
+  transform: translateY(-2px);
+}
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 30px;
+    }
+
+    .auth-buttons button {
+      background: #165ccb;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .auth-buttons button:hover {
+      background: #003eaa;
+    }
+    .container h2 {
+      font-size: 2.2rem;
+      margin: 30px 0 7px 0;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: #1d254c;
+    }
+    .container > p {
+      color: #858fa3;
+      margin-bottom: 30px;
+      font-size: 18px;
+      font-weight: 400;
+    }
+    .filter-bar {
+      background: #fff;
+      border-radius: 18px;
+      padding: 22px 28px 12px 28px;
+      box-shadow: 0 1px 5px rgba(80,130,245, 0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      margin-bottom: 25px;
+    }
+    .filter-bar input[type="text"] {
+      width: 100%;
+      padding: 13px 15px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #e2e4e9;
+      margin-bottom: 18px;
+      transition: border 0.22s;
+    }
+    .filter-bar input[type="text"]:focus {
+      outline: none;
+      border: 1.8px solid #165ccb;
+    }
+    .categories {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 12px;
+    }
+    .categories label {
+      display: inline-block;
+      background: #f6f8fa;
+      color: #434e6e;
+      padding: 8px 24px;
+      border-radius: 19px;
+      font-weight: 500;
+      border: 1.6px solid transparent;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.22s, color 0.22s, border-color 0.22s;
+      margin-bottom: 5px;
+    }
+    .categories label:hover,
+    .categories label.selected {
+      background: #1052cf;
+      color: #fff;
+      border-color: #165ccb;
+    }
+    input[type="radio"] {
+      display: none;
+    }
+    #all:checked ~ .filter-bar .categories label[for="all"],
+    #tech:checked ~ .filter-bar .categories label[for="tech"],
+    #health:checked ~ .filter-bar .categories label[for="health"],
+    #business:checked ~ .filter-bar .categories label[for="business"],
+    #creative:checked ~ .filter-bar .categories label[for="creative"],
+    #education:checked ~ .filter-bar .categories label[for="education"] {
+      background: #1052cf;
+      color: #fff;
+      border-color: #165ccb;
+    }
+    .careers {
+      margin-top: 6px;
+      margin-bottom: 46px;
+    }
+    .career-card {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 3px 16px rgba(35,68,165,.10);
+      padding: 35px 35px 15px 35px;
+      margin-bottom: 38px;
+      transition: box-shadow 0.2s, transform 0.18s;
+      border: 1.2px solid #f0f2fa;
+      position: relative;
+      display: none;
+    }
+    .career-card:hover {
+      box-shadow: 0 6px 24px rgba(80,130,245,0.25);
+      transform: translateY(-3px) scale(1.01);
+      border-color: #b0caff;
+    }
+    #all:checked ~ .careers .career-card,
+    #tech:checked ~ .careers .tech,
+    #health:checked ~ .careers .health,
+    #business:checked ~ .careers .business,
+    #creative:checked ~ .careers .creative,
+    #education:checked ~ .careers .education {
+      display: block;
+    }
+    .career-card h3 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #1d254c;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    .career-card .tag {
+      font-size: 15px;
+      margin-left: 10px;
+      padding: 3px 15px;
+      border-radius: 14px;
+      font-weight: 500;
+      background: #eafff4;
+      color: #19c37d;
+    }
+    .career-card > p {
+      margin: 0 0 12px 0;
+      color: #616b85;
+      font-size: 1.19rem;
+      font-weight: 400;
+    }
+    .details {
+      display: flex;
+      gap: 34px;
+      margin: 12px 0 14px 0;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .details span {
+      background: #f4f6fa;
+      border-radius: 7px;
+      color: #434e6e;
+      font-size: 15px;
+      padding: 7px 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-right: 7px;
+      margin-bottom: 7px;
+    }
+    .skills {
+      margin-bottom: 12px;
+    }
+    .skills span {
+      display: inline-block;
+      background: #fce8d2;
+      color: #635420;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-size: 15px;
+      margin: 2px 11px 7px 0;
+    }
+    .career-card b {
+      color: #1d254c;
+      font-size: 1.05em;
+      font-weight: 600;
+    }
+    .card-footer {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .card-footer .btn {
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      background: #165ccb;
+      color: #fff;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: background 0.23s;
+      box-shadow: 0 1px 3px rgba(16,82,207,0.07);
+    }
+    .card-footer .btn:hover {
+      background: #003eaa;
+    }
+    .card-footer .save-btn {
+      background: #fff;
+      color: #165ccb;
+      border: 1.4px solid #165ccb;
+      transition: background 0.19s, color 0.19s;
+    }
+    .card-footer .save-btn:hover {
+      background: #165ccb;
+      color: #fff;
+    }
+    .chip {
+      display: inline-block;
+      padding: 6px 14px;
+      background: #f5f7fa;
+      border-radius: 18px;
+      font-size: 15px;
+      color: #616b85;
+      margin: 4px 5px 0 0;
+      font-weight: 500;
+    }
+    .chip.more {
+      color: #165ccb;
+      background: #eaf3ff;
+      border: 1px solid #dde9fa;
+    }
+    .detailed-img {
+      display: none;
+      margin: 24px auto;
+      max-width: 600px;
+      border-radius: 18px;
+      box-shadow: 0 5px 18px rgba(110,130,180,0.08);
+      border: 1px solid #f2f4f6;
+      background: #fff;
+    }
+    @media (max-width: 650px) {
+      .container { padding:10px; }
+      .navbar {padding: 9px 15px;}
+      .career-card {padding: 25px 8px;}
+      .detailed-img {max-width: 93vw;}
+    }
+   
+  </style>
+  <script>
+    function showCareerImage(btn) {
+      const img = btn.parentNode.parentNode.querySelector('.detailed-img');
+      if(img) {
+        img.style.display = img.style.display === 'block' ? 'none' : 'block';
+        if(img.style.display === 'block') {
+          btn.innerText = "Hide Image";
+        } else {
+          btn.innerText = "View Detailed Career Guide";
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+    <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">MargDarshak</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="assessment.html">Assessment</a></li>
+      <li><a href="career.html">Career Guide</a></li>
+      <li><a href="college.html">College</a></li>
+      <li><a href="notification.html">Updates</a></li>
+      <li><a id="profileBtn" href="profile.html" >Profile</a></li>
+      <li><button id="logoutBtn" >Logout</button></li>
+    </ul>
+  </nav>
+  
+  <main class="container">
+    <h2>Explore Career Options</h2>
+    <p>Discover detailed information about different careers, including salary ranges, growth prospects, and required skills.</p>
+    <input type="radio" name="category" id="all" checked />
+    <input type="radio" name="category" id="tech" />
+    <input type="radio" name="category" id="health" />
+    <input type="radio" name="category" id="business" />
+    <input type="radio" name="category" id="creative" />
+    <input type="radio" name="category" id="education" />
+
+    <div class="filter-bar">
+      <input type="text" placeholder="Search careers by title, skills, or keywords..." />
+      <div class="categories">
+        <label for="all">All Careers</label>
+        <label for="tech">Technology</label>
+        <label for="health">Healthcare</label>
+        <label for="business">Business</label>
+        <label for="creative">Creative</label>
+        <label for="education">Education</label>
+      </div>
+    </div>
+    <section class="careers">
+      <!-- Software Engineer -->
+      <div class="career-card tech">
+        <h3>Software Engineer <span class="tag">Trending</span></h3>
+        <p>Design, develop, and maintain software applications and systems using various programming languages and frameworks.</p>
+        <div class="details">
+          <span>⭐ 4.8 <span class="chip">technology</span></span>
+          <span>$ Salary Range<br><b>₹6-20 LPA</b></span>
+          <span>📈 Growth<br><span class="chip">Very High</span></span>
+          <span>📊 Demand<br><span class="chip">High</span></span>
+          <span>⌛ Experience<br><span class="chip">0-15+ years</span></span>
+        </div>
+        <b>Key Skills Required</b>
+        <div class="skills">
+          <span>Programming</span><span>Problem Solving</span><span>Algorithms</span><span>Databases</span>
+        </div>
+        <b>Education Required</b>
+        <p>B.Tech/B.E in Computer Science, IT or related field</p>
+        <b>Top Hiring Companies</b><br>
+        <span class="chip">Google</span><span class="chip">Microsoft</span><span class="chip">Amazon</span><span class="chip more">+2 more</span>
+        <div class="card-footer">
+          <button class="btn" onclick="showCareerImage(this)">View Detailed Career Guide</button>
+          <button class="btn save-btn">Save Career</button>
+        </div>
+        <img src="se1-mapping.jpg" alt="Software Engineer Journey" class="detailed-img">
+      </div>
+      <!-- Other career cards... (data unchanged, but without images for brevity) -->
+      <div class="career-card tech">
+        <h3>Data Scientist <span class="tag">Trending</span></h3>
+        <p>Analyze complex data sets to extract insights and help organizations make data-driven decisions using statistical methods and machine learning.</p>
+        <div class="details">
+          <span>⭐ 4.7 <span class="chip">technology</span></span>
+          <span>$ Salary Range<br><b>₹8-30 LPA</b></span>
+          <span>📈 Growth<br><span class="chip">Very High</span></span>
+          <span>📊 Demand<br><span class="chip">Very High</span></span>
+          <span>⌛ Experience<br><span class="chip">0-12+ years</span></span>
+        </div>
+        <b>Key Skills Required</b>
+        <div class="skills">
+          <span>Statistics</span><span>Python/R</span><span>Machine Learning</span><span>Data Visualization</span>
+        </div>
+        <b>Education Required</b>
+        <p>B.Tech/M.Tech in CS, Statistics, Mathematics or related field</p>
+        <b>Top Hiring Companies</b><br>
+        <span class="chip">Flipkart</span><span class="chip">Uber</span><span class="chip">Zomato</span><span class="chip more">+2 more</span>
+        <div class="card-footer">
+          <button class="btn">View Detailed Career Guide</button>
+          <button class="btn save-btn">Save Career</button>
+        </div>
+      </div>
+      <!-- Business (example) -->
+      <div class="career-card business">
+        <h3>Digital Marketing Manager <span class="tag">Trending</span></h3>
+        <p>Plan and execute digital marketing campaigns across various online platforms to promote products and services.</p>
+        <div class="details">
+          <span>⭐ 4.5 <span class="chip">business</span></span>
+          <span>$ Salary Range<br><b>₹4-15 LPA</b></span>
+          <span>📈 Growth<br><span class="chip">High</span></span>
+          <span>📊 Demand<br><span class="chip">High</span></span>
+          <span>⌛ Experience<br><span class="chip">0-10+ years</span></span>
+        </div>
+        <b>Key Skills Required</b>
+        <div class="skills">
+          <span>SEO/SEM</span><span>Social Media</span><span>Analytics</span><span>Content Strategy</span>
+        </div>
+        <b>Education Required</b>
+        <p>Any Bachelor's degree + Digital Marketing certification</p>
+        <b>Top Hiring Companies</b><br>
+        <span class="chip">Amazon</span><span class="chip">Flipkart</span><span class="chip">Swiggy</span><span class="chip more">+2 more</span>
+        <div class="card-footer">
+          <button class="btn">View Detailed Career Guide</button>
+          <button class="btn save-btn">Save Career</button>
+        </div>
+      </div>
+      <!-- Healthcare -->
+      <div class="career-card health">
+        <h3>Doctor (MBBS)</h3>
+        <p>Diagnose and treat patients, conduct medical examinations, and provide healthcare services to improve patient outcomes.</p>
+        <div class="details">
+          <span>⭐ 4.9 <span class="chip">healthcare</span></span>
+          <span>$ Salary Range<br><b>₹8-25 LPA</b></span>
+          <span>📈 Growth<br><span class="chip">Steady</span></span>
+          <span>📊 Demand<br><span class="chip">Very High</span></span>
+          <span>⌛ Experience<br><span class="chip">0-30+ years</span></span>
+        </div>
+        <b>Key Skills Required</b>
+        <div class="skills">
+          <span>Medical Knowledge</span><span>Communication</span><span>Empathy</span><span>Critical Thinking</span>
+        </div>
+        <b>Education Required</b>
+        <p>MBBS (5.5 years) + MD/MS specialization (3 years)</p>
+        <b>Top Hiring Companies</b><br>
+        <span class="chip">AIIMS</span><span class="chip">Apollo</span><span class="chip">Fortis</span><span class="chip more">+1 more</span>
+        <div class="card-footer">
+          <button class="btn">View Detailed Career Guide</button>
+          <button class="btn save-btn">Save Career</button>
+        </div>
+      </div>
+      <!-- Creative -->
+      <div class="career-card creative">
+        <h3>UX/UI Designer <span class="tag">Trending</span></h3>
+        <p>Design user interfaces and experiences for digital products, focusing on usability and visual appeal.</p>
+        <div class="details">
+          <span>⭐ 4.6 <span class="chip">creative</span></span>
+          <span>$ Salary Range<br><b>₹5-18 LPA</b></span>
+          <span>📈 Growth<br><span class="chip">High</span></span>
+          <span>📊 Demand<br><span class="chip">High</span></span>
+          <span>⌛ Experience<br><span class="chip">0-12+ years</span></span>
+        </div>
+        <b>Key Skills Required</b>
+        <div class="skills">
+          <span>Design Tools</span><span>User Research</span><span>Prototyping</span><span>Visual Design</span>
+        </div>
+        <b>Education Required</b>
+        <p>Design degree or certification in UX/UI</p>
+        <b>Top Hiring Companies</b><br>
+        <span class="chip">Adobe</span><span class="chip">Figma</span><span class="chip">Zomato</span><span class="chip more">+2 more</span>
+        <div class="card-footer">
+          <button class="btn">View Detailed Career Guide</button>
+          <button class="btn save-btn">Save Career</button>
+        </div>
+      </div>
+      <!-- Education -->
+      <div class="career-card education">
+        <h3>Teacher</h3>
+        <p>Educate students in various subjects, develop curriculum, and foster learning in academic environments.</p>
+        <div class="details">
+          <span>⭐ 4.4 <span class="chip">education</span></span>
+          <span>$ Salary Range<br><b>₹3-12 LPA</b></span>
+          <span>📈 Growth<br><span class="chip">Moderate</span></span>
+          <span>📊 Demand<br><span class="chip">Steady</span></span>
+          <span>⌛ Experience<br><span class="chip">0-25+ years</span></span>
+        </div>
+        <b>Key Skills Required</b>
+        <div class="skills">
+          <span>Subject Expertise</span><span>Communication</span><span>Patience</span><span>Creativity</span>
+        </div>
+        <b>Education Required</b>
+        <p>B.Ed + subject specialization degree</p>
+        <b>Top Hiring Companies</b><br>
+        <span class="chip">Kendriya Vidyalaya</span><span class="chip">CBSE Schools</span><span class="chip">BYJU'S</span><span class="chip more">+1 more</span>
+        <div class="card-footer">
+          <button class="btn">View Detailed Career Guide</button>
+          <button class="btn save-btn">Save Career</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign in | Margdarshak</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background-color: #f8f9fa; color: #333; }
+   /* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 10%;
+  background: rgba(255, 255, 255, 0.822);
+  backdrop-filter: blur(12px);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Logo */
+.navbar .logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #007fe8;
+  letter-spacing: 1px;
+  transition: transform 0.3s;
+}
+.navbar .logo:hover {
+  transform: scale(1.08);
+}
+
+/* Navbar Menu */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+/* Links */
+.navbar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 15px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+/* Underline animation */
+.navbar ul li a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -6px;
+  background: #007bff;
+  transition: width 0.3s;
+}
+.navbar ul li a:hover {
+  color: #007bff;
+}
+.navbar ul li a:hover::after {
+  width: 100%;
+}
+
+/* Buttons (Profile + Logout) */
+.navbar ul li button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+/* Profile button */
+.navbar ul li .profile-btn {
+  background: #007bff;
+  color: #fff;
+}
+.navbar ul li .profile-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Logout button */
+.navbar ul li .logout-btn {
+  background: #ff4d4d;
+  color: #fff;
+}
+.navbar ul li .logout-btn:hover {
+  background: #cc0000;
+  transform: translateY(-2px);
+}
+
+.card {
+  width: 360px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+
+  /* Center only this */
+  margin: 80px auto;   /* pushes card down a bit from navbar */
+}
+    h2 { text-align: center; color: #004aad; margin-bottom: 18px; }
+    label { display: block; margin-bottom: 6px; color: #333; font-size: 0.9rem; }
+    input { width: 100%; padding: 10px; border: 1px solid #d6d6d6; border-radius: 8px; margin-bottom: 14px; font-size: 0.95rem; }
+    .btn-sign { width: 100%; padding: 11px; border-radius: 8px; border: none; background: #004aad; color: #fff; font-weight: 600; cursor: pointer; }
+    .note { font-size: 0.85rem; color: #666; margin-top: 8px; text-align: center; }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">MargDarshak</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a id="assessmentLink" href="assessment.html">Assessment</a></li>
+      <li><a href="career.html">Career Guide</a></li>
+      <li><a href="college.html">College</a></li>
+      <li><a href="notification.html">Updates</a></li>
+      <li><a id="loginBtn" href="login.html">Login</a></li>
+      <li><a id="profileBtn" href="profile.html" style="display:none;">Profile</a></li>
+      <li><button id="logoutBtn" style="display:none;">Logout</button></li>
+    </ul>
+  </nav>
+
+  <div class="card">
+    <h2>Sign In</h2>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input id="username" type="text" placeholder="your username" required />
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="your password" required />
+      <button type="submit" class="btn-sign">Sign In</button>
+    </form>
+    <div class="note">New here? <a href="signup.html">Create account</a></div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgb7JhR9ko1YH2gyrPPtFb2ZGqq8IXg6g",
+      authDomain: "margdarshak-58c9c.firebaseapp.com",
+      projectId: "margdarshak-58c9c",
+      storageBucket: "margdarshak-58c9c.appspot.com",
+      messagingSenderId: "912493540489",
+      appId: "1:912493540489:web:88e299d732a7ad7c6f0258",
+      measurementId: "G-BYPBLGPZTY"
+    };
+
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      if (!username || !password) return alert('Enter both fields.');
+
+      try {
+        const fakeEmail = username + "@margdarshak.app";
+        await auth.signInWithEmailAndPassword(fakeEmail, password);
+        window.location.href = 'index.html'; // redirect to home page
+      } catch (err) {
+        console.error(err);
+        alert('Login failed: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
