@@ -9,70 +9,70 @@ The platform uses assessments, structured career information, and real-time upda
 
 Choosing the right career path can be overwhelming for students. MargDarshak addresses this problem by providing:
 
-An assessment-based evaluation system
+• An assessment-based evaluation system
 
-Career and college exploration
+• Career and college exploration
 
-Centralized updates for applications and opportunities
+• Centralized updates for applications and opportunities
 
 The project is currently implemented as a frontend-focused web application with Firebase integration.
 
 ⚙️ Key Features
 🔐 User Authentication
 
-Secure login system implemented using Firebase Authentication
+• Secure login system implemented using Firebase Authentication
 
-Personalized access to assessments and results
+• Personalized access to assessments and results
 
 📝 Career Assessment Module
 
-Users take an assessment quiz designed to evaluate subject strengths
+• Users take an assessment quiz designed to evaluate subject strengths
 
-Automatic evaluation of responses
+• Automatic evaluation of responses
 
 📊 Scorecard & Career Suggestions
 
-Generates a scorecard based on assessment results
+• Generates a scorecard based on assessment results
 
-Highlights strong subjects
+• Highlights strong subjects
 
-Suggests suitable career options aligned with user performance
+• Suggests suitable career options aligned with user performance
 
 🎓 Career & College Information
 
-Displays various career paths
+• Displays various career paths
 
-Provides information about relevant colleges and courses
+• Provides information about relevant colleges and courses
 
 🔔 Updates & Notifications
 
-Dedicated updates section for new applications or opportunities
+• Dedicated updates section for new applications or opportunities
 
-Frontend-based popup/notification system
+• Frontend-based popup/notification system
 
-🤖 Chatbot (Basic Implementation)
+🤖 Chatbot 
 
-Integrated chatbot for guidance and user interaction
+• Integrated chatbot for guidance and user interaction
 
-Currently minimally trained and under development
+• Currently minimally trained and under development
 
 🛠️ Technology Stack
 
-Frontend: HTML, CSS, JavaScript
+• Frontend: HTML, CSS, JavaScript
 
-Backend Services: Firebase
+• Backend Services: Firebase
 
-Firebase Authentication
+    Firebase Authentication
 
-Firebase Hosting
+    Firebase Hosting
 
 🎯 Target Audience
 
-School Students
+• School Students
 
-College Students
+• College Students
 
-Students seeking clarity in career planning and academic choices
+• Students seeking clarity in career planning and academic choices
 
 ▶️ How to Access
 
@@ -84,16 +84,13 @@ No local setup is required.
 
 🚧 Future Enhancements
 
-Expansion of career and domain options
+• Expansion of career and domain options
 
-Implementation of a robust backend
+• Implementation of a robust backend
 
-Improved assessment logic and personalization
+• Improved assessment logic and personalization
 
-Advanced and better-trained chatbot
+• Advanced and better-trained chatbot
 
-Database-driven updates and notifications
+• Database-driven updates and notifications
 
-👩‍💻 Developer
-
-Tanisha Singh
