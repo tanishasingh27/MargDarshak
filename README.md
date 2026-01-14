@@ -18,17 +18,20 @@ Choosing the right career path can be overwhelming for students. MargDarshak add
 The project is currently implemented as a frontend-focused web application with Firebase integration.
 
 ⚙️ Key Features
+
 🔐 User Authentication
 
 • Secure login system implemented using Firebase Authentication
 
 • Personalized access to assessments and results
 
+
 📝 Career Assessment Module
 
 • Users take an assessment quiz designed to evaluate subject strengths
 
 • Automatic evaluation of responses
+
 
 📊 Scorecard & Career Suggestions
 
@@ -38,11 +41,13 @@ The project is currently implemented as a frontend-focused web application with 
 
 • Suggests suitable career options aligned with user performance
 
+
 🎓 Career & College Information
 
 • Displays various career paths
 
 • Provides information about relevant colleges and courses
+
 
 🔔 Updates & Notifications
 
@@ -50,11 +55,13 @@ The project is currently implemented as a frontend-focused web application with 
 
 • Frontend-based popup/notification system
 
+
 🤖 Chatbot 
 
 • Integrated chatbot for guidance and user interaction
 
 • Currently minimally trained and under development
+
 
 🛠️ Technology Stack
 
@@ -66,6 +73,7 @@ The project is currently implemented as a frontend-focused web application with 
 
     Firebase Hosting
 
+
 🎯 Target Audience
 
 • School Students
@@ -74,6 +82,7 @@ The project is currently implemented as a frontend-focused web application with 
 
 • Students seeking clarity in career planning and academic choices
 
+
 ▶️ How to Access
 
 This project is deployed and can be accessed directly via the live link:
@@ -81,6 +90,7 @@ This project is deployed and can be accessed directly via the live link:
 👉 https://margdarshak-58c9c.web.app
 
 No local setup is required.
+
 
 🚧 Future Enhancements
 
